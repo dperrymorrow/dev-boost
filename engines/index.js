@@ -26,7 +26,8 @@ module.exports = filePath => {
     hasFile: () => matchingFile,
     render() {
       if (!matchingFile) return false;
-      return engines[ext][matchingExt](matchingFile);
+      const raw = fs.readFileSync(matchingFile).toString();
+      return engines[ext][matchingExt](raw);
     },
   };
 };

@@ -1,23 +1,36 @@
-const fs = require("fs");
-const jsdom = require("jsdom");
+"use strict";
 
-const { JSDOM } = jsdom;
-const pug = require("pug");
+const DomParser = require("dom-parser");
 
-module.exports = function(filePath) {
-  const dom = new JSDOM(fs.readFileSync(filePath).toString());
-
-  const template = dom.window.document.querySelector("template");
-  const script = dom.window.document.querySelector("script").innerHTML.trim();
-
-  let templateStr = template.innerHTML.trim();
-  if (template.getAttribute("lang") === "pug") templateStr = _renderPug(templateStr);
-  return script.replace("{", `{\n  template: \`\n  ${templateStr}\`,\n`);
+const stylus = require("./stylus");
+const pug = require("./pug");
+const compilers = {
+  pug,
+  stylus,
 };
 
-function _renderPug(str) {
-  const options = {
-    doctype: "html",
-  };
-  return pug.compile(str, options)();
+module.exports = raw => {
+  const parser = new DomParser();
+  const dom = parser.parseFromString(raw);
+
+  const style = dom.getElementsByTagName("style")[0];
+  let script = dom.getElementsByTagName("script")[0].innerHTML.trim();
+
+  let templateStr = _getNodeContents(dom.getElementsByTagName("template")[0]);
+  script = script.replace("{", `{\n  template: \`\n  ${templateStr}\`,\n`);
+
+  if (style) {
+    script += `\ndocument.getElementsByTagName('head')[0].innerHTML += \`<style>${_getNodeContents(
+      style
+    )}</style>\`;`;
+  }
+  return script;
+};
+
+function _getNodeContents(node) {
+  const contents = node.innerHTML.trim();
+
+  const lang = node.getAttribute("lang");
+  if (lang) return compilers[lang](contents);
+  return contents;
 }

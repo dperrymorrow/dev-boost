@@ -2,8 +2,7 @@
 const pug = require("pug");
 const fs = require("fs");
 
-module.exports = function(filePath) {
-  const raw = fs.readFileSync(filePath);
+module.exports = raw => {
   const options = {
     doctype: "html",
   };
