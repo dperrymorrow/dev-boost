@@ -1,0 +1,30 @@
+{
+  "name": "dev-boost",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dev-server.js",
+  "bin": {
+    "boost": "bin/dev-server.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "chalk": "^2.4.1",
+    "install": "^0.11.0",
+    "jsdom": "^11.11.0",
+    "npm": "^6.1.0",
+    "portfinder": "^1.0.13",
+    "pug": "^2.0.3"
+  },
+  "devDependencies": {
+    "eslint": "^4.12.1",
+    "eslint-plugin-prettier": "^2.3.1",
+    "eslint-plugin-promise": "^3.6.0",
+    "eslint-plugin-unicorn": "^3.0.0",
+    "prettier": "^1.9.1",
+    "nodemon": "^1.17.5"
+  }
+}
