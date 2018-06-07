@@ -12,6 +12,7 @@ const portfinder = require("portfinder");
 const mimeTypes = {
   js: "text/javascript",
   html: "text/html",
+  css: "text/css",
 };
 
 function _findFile(fileName) {

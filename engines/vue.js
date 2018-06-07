@@ -20,7 +20,7 @@ module.exports = raw => {
   script = script.replace("{", `{\n  template: \`\n  ${templateStr}\`,\n`);
 
   if (style) {
-    script += `\ndocument.getElementsByTagName('head')[0].innerHTML += \`<style>${_getNodeContents(
+    script += `\ndocument.getElementsByTagName('head')[0].innerHTML += \`<style>\n${_getNodeContents(
       style
     )}</style>\`;`;
   }

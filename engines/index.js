@@ -2,18 +2,20 @@
 
 const vue = require("./vue");
 const pug = require("./pug");
+const stylus = require("./stylus");
 const path = require("path");
 const fs = require("fs");
 
 const engines = {
   js: { vue },
   html: { pug },
+  css: { stylus, styl: stylus },
 };
 
 module.exports = filePath => {
   const ext = path.extname(filePath).replace(".", "");
   let matchingExt;
-  let matchingFile = false;
+  let matchingFile;
 
   if (ext in engines) {
     matchingExt = Object.keys(engines[ext]).find(engine =>
@@ -23,7 +25,7 @@ module.exports = filePath => {
   }
 
   return {
-    hasFile: () => matchingFile,
+    hasFile: () => matchingFile && matchingExt,
     render() {
       if (!matchingFile) return false;
       const raw = fs.readFileSync(matchingFile).toString();
