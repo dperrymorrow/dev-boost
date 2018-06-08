@@ -2,9 +2,9 @@
   "name": "dev-boost",
   "version": "1.0.0",
   "description": "",
-  "main": "dev-server.js",
+  "main": "bin/index.js",
   "bin": {
-    "boost": "bin/dev-server.js"
+    "boost": "bin/index.js"
   },
   "scripts": {
     "lint": "esw --watch --changed --fix"
