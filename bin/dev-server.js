@@ -4,23 +4,16 @@
 const http = require("http");
 const fs = require("fs");
 const path = require("path");
-const source = "/source";
 const chalk = require("chalk");
 const engines = require("../engines");
 const portfinder = require("portfinder");
-
-const mimeTypes = {
-  js: "text/javascript",
-  html: "text/html",
-  css: "text/css",
-};
+const notifier = require("node-notifier");
+const config = require("../lib/config");
+const reloader = require("../lib/reloader");
 
 function _findFile(fileName) {
   if (fileName === "/") fileName = "/index.html";
-  fileName = process.cwd() + source + fileName;
-
-  if (fs.existsSync(fileName)) return fs.readFileSync(fileName).toString();
-
+  fileName = config.sourceDir + fileName;
   const renderer = engines(fileName);
   return renderer.hasFile() ? renderer.render(fileName) : false;
 }
@@ -28,10 +21,10 @@ function _findFile(fileName) {
 async function _serve() {
   const port = await portfinder.getPortPromise();
 
-  http
+  const server = http
     .createServer((req, res) => {
       const ext = path.extname(req.url).replace(".", "");
-      const mime = mimeTypes[ext] || "text/html";
+      const mime = config.mimeTypes[ext] || "text/html";
 
       try {
         const data = _findFile(req.url);
@@ -47,14 +40,22 @@ async function _serve() {
         }
       } catch (err) {
         res.writeHead(500, { "Content-Type": "text" });
+
+        notifier.notify({
+          title: path.basename(req.url),
+          message: err.message,
+          sound: true,
+        });
+
         console.log("error rendering:", chalk.bold.yellow(req.url));
         console.log(chalk.red(err.stack));
-        res.write(`${req.url}\n${err.message}`);
+        res.write(`${req.url}\n${err.stack}`);
         res.end();
       }
     })
     .listen(port);
 
+  await reloader.start(server);
   console.log(chalk.cyan(`listening at http://localhost:${port}`));
 }
 
