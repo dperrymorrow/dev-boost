@@ -4,9 +4,7 @@
     "ecmaVersion": 8
   },
   "plugins": [
-    "prettier",
-    "unicorn",
-    "promise"
+    "prettier"
   ],
   "rules": {
     "no-debugger": [
@@ -157,30 +155,6 @@
         "printWidth": 100,
         "trailingComma": "es5"
       }
-    ],
-    "unicorn/filename-case": [
-      0,
-      {
-        "case": "kebabCase"
-      }
-    ],
-    "unicorn/throw-new-error": [
-      "error"
-    ],
-    "unicorn/no-array-instanceof": [
-      "error"
-    ],
-    "unicorn/no-new-buffer": [
-      "error"
-    ],
-    "unicorn/no-hex-escape": [
-      "error"
-    ],
-    "unicorn/prefer-starts-ends-with": [
-      "warn"
-    ],
-    "promise/catch-or-return": [
-      "error"
     ]
   }
 }
