@@ -9,13 +9,16 @@
   "scripts": {
     "lint": "esw --watch --changed --fix"
   },
-  "author": "",
+  "engines": {
+    "node": ">=11.0",
+    "npm": ">=6.0.0"
+  },
+  "author": "David Morrow",
   "license": "MIT",
   "dependencies": {
     "chalk": "^2.4.1",
     "chokidar": "^2.0.3",
     "del": "^3.0.0",
-    "eslint-config-prettier": "^4.0.0",
     "lodash.debounce": "^4.0.8",
     "lodash.get": "^4.4.2",
     "node-notifier": "^5.2.1",
