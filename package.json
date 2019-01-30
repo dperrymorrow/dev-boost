@@ -23,6 +23,7 @@
     "lodash.get": "^4.4.2",
     "node-notifier": "^5.2.1",
     "npm": "^6.1.0",
+    "open": "0.0.5",
     "portfinder": "^1.0.13",
     "pug": "^2.0.3",
     "pug-multiple-basedirs-plugin": "^0.1.3",
